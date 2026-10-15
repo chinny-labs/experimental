@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pitch Trainer</title>
+  <meta name="description" content="Ear training for perfect pitch and relative pitch, with adaptive levels.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="back" href="../">&larr; Experiments</a>
+    <h1>Pitch Trainer</h1>
+  </header>
+
+  <main>
+    <nav class="tabs" role="tablist" aria-label="Training mode">
+      <button role="tab" data-mode="pp">Perfect pitch</button>
+      <button role="tab" data-mode="int">Intervals</button>
+    </nav>
+    <p class="blurb" id="blurb"></p>
+
+    <section class="card setup" aria-label="What to practice">
+      <div class="seg" role="group" aria-label="Practice style">
+        <button data-style="levels">Levels</button>
+        <button data-style="custom">Custom</button>
+      </div>
+
+      <div id="levels-panel">
+        <div class="level-row">
+          <button class="icon-btn" id="lvl-down" aria-label="Previous level">&lsaquo;</button>
+          <div class="level-title"><strong id="lvl-label">Level 1</strong> <span class="muted" id="lvl-of"></span></div>
+          <button class="icon-btn" id="lvl-up" aria-label="Next level">&rsaquo;</button>
+        </div>
+        <div class="progress" aria-hidden="true"><div id="lvl-bar"></div></div>
+        <p class="muted small" id="lvl-hint"></p>
+      </div>
+
+      <div id="custom-panel" hidden>
+        <p class="muted small">Pick what to practice (at least two).</p>
+      </div>
+
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <section class="card quiz" aria-label="Quiz">
+      <div class="scoreline">
+        <span id="session">Session 0 / 0</span>
+        <span id="streak"></span>
+      </div>
+
+      <div class="play-wrap">
+        <button class="play" id="play"><span id="play-icon">&#9654;</span><span id="play-label">Start</span></button>
+        <button class="link-btn" id="replay" hidden>Replay</button>
+      </div>
+
+      <p class="prompt" id="prompt"></p>
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+
+      <div id="answer-area"></div>
+      <div id="display-piano" class="display-piano" hidden></div>
+
+      <p class="kbd-hint muted small" id="kbd-hint"></p>
+    </section>
+
+    <details class="card">
+      <summary>Settings</summary>
+      <div class="settings">
+        <div data-for="pp">
+          <label class="row">
+            <span>Note range</span>
+            <select id="set-range">
+              <option value="narrow">One octave (middle C)</option>
+              <option value="wide">Three octaves</option>
+            </select>
+          </label>
+          <label class="row check">
+            <input type="checkbox" id="set-mask">
+            <span>Play a quick random run before each note, so you can't just compare it to the last one</span>
+          </label>
+          <label class="row check">
+            <input type="checkbox" id="set-labels">
+            <span>Show note names on the keys</span>
+          </label>
+        </div>
+        <div data-for="int">
+          <label class="row">
+            <span>Direction</span>
+            <select id="set-dir">
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
+              <option value="harm">Harmonic (together)</option>
+              <option value="mixed">Mixed</option>
+            </select>
+          </label>
+          <label class="row check">
+            <input type="checkbox" id="set-songs">
+            <span>Show reference songs on the buttons</span>
+          </label>
+        </div>
+        <label class="row check">
+          <input type="checkbox" id="set-auto">
+          <span>Go to the next question automatically after a correct answer</span>
+        </label>
+        <label class="row">
+          <span>Volume</span>
+          <input type="range" id="set-vol" min="0" max="1" step="0.05">
+        </label>
+      </div>
+    </details>
+
+    <details class="card" id="stats-card">
+      <summary>Your stats</summary>
+      <div id="stats"></div>
+      <button class="link-btn danger" id="reset-stats">Reset stats for this mode</button>
+    </details>
+
+    <details class="card">
+      <summary>How to practice</summary>
+      <div class="howto">
+        <p><strong>Little and often.</strong> Ten minutes a day works better than an hour once a week.</p>
+        <p><strong>Perfect pitch:</strong> try to hear each note's colour, not where it sits relative to the last one. Before answering, sing the note back or picture what it feels like. The random run before each note stops you leaning on relative pitch. Once three octaves feel easy, switch it on in Settings.</p>
+        <p><strong>Intervals:</strong> link each interval to the opening of a song you know (switch on reference songs in Settings). Use the songs as a crutch at first, then drop them and listen for each interval's character: bright, tense, open, hollow.</p>
+        <p><strong>Use what you get wrong.</strong> When you miss, play the right answer and your answer back to back. Your stats show which pairs you mix up most.</p>
+        <p><strong>Levels</strong> add one new item each time you get 16 of your last 20 right. Use <strong>Custom</strong> to drill a specific pair you keep confusing.</p>
+      </div>
+    </details>
+
+    <p class="muted small footnote">No sound on iPhone? Turn off silent mode.</p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
